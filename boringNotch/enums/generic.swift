@@ -27,6 +27,12 @@ public enum NotchState {
 public enum NotchViews {
     case home
     case shelf
+    case focus
+    case water
+    case rest
+    case prayer
+    case screenTime
+    case timer
 }
 
 enum SettingsEnum {

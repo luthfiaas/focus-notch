@@ -1,3 +1,37 @@
+# Focus Notch
+
+**Focus Notch is a fork of [Boring Notch](https://github.com/TheBoredTeam/boring.notch)** by TheBoredTeam, licensed under the [GNU GPL v3](LICENSE). It keeps everything Boring Notch does (music, calendar, shelf, HUDs) and adds wellness tools that live in the notch:
+
+| Tab | What it does |
+|---|---|
+| **Focus** | Pomodoro timer drawn as a watch face: countdown, time done, current time and finish time. Focus sessions, short and long breaks, auto-start, and today/week focus statistics. |
+| **Timer** | A plain countdown timer with presets (1 min – 1 h), ±1 / +5 min adjust and recent lengths. Rings in the notch and as a notification when it's up. |
+| **Water** | Daily water goal with quick-add buttons, undo, and a weekly chart. |
+| **Rest** | Eye-rest, stretch and stand-up reminders on their own schedules, limited to working hours, with start / snooze / skip. |
+| **Prayer** | The day's five prayer times on a timeline with a live countdown to the next one, calculated on the Mac (Kemenag, MWL, ISNA, and more), with notifications and a done-tracker. |
+| **Screen Time** | Time this Mac is in use today, by app and by hour, with pickups and an optional daily limit. Measured by the app itself (macOS doesn't let other apps read its Screen Time). |
+
+While a timer runs, the closed notch shows its countdown, and events (session done, water goal, prayer time, timer up) appear there briefly. Settings for all of these are under **Wellness** in the app's settings.
+
+The new code is in [`boringNotch/Wellness/`](boringNotch/Wellness/); the changes to Boring Notch's own files are small (tabs, the closed-notch view, the settings sidebar, app start). Automatic updates are switched off, so this fork never replaces itself with a Boring Notch release.
+
+### Build
+
+Requires macOS 14+ and Xcode 26+. Open `boringNotch.xcodeproj` and run the `boringNotch` scheme, or:
+
+```sh
+xcodebuild build -project boringNotch.xcodeproj -scheme boringNotch -configuration Release \
+  -skipMacroValidation -skipPackagePluginValidation CODE_SIGN_IDENTITY=- DEVELOPMENT_TEAM=
+```
+
+### Credit and license
+
+All of the notch itself — its window, shape, animations, music, calendar, shelf and HUD features — is the work of TheBoredTeam and the Boring Notch contributors. This fork is distributed under the same GPL v3 license; see [LICENSE](LICENSE) and [THIRD_PARTY_LICENSES](THIRD_PARTY_LICENSES).
+
+---
+
+*The original Boring Notch README follows.*
+
 <h1 align="center">
   <br>
   <a href="http://theboring.name"><img src="https://framerusercontent.com/images/RFK4vs0kn8pRMuOO58JeyoemXA.png?scale-down-to=256" alt="Boring Notch" width="150"></a>

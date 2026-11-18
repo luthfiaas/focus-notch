@@ -54,6 +54,23 @@ struct SettingsView: View {
                 NavigationLink(value: "Shortcuts") {
                     Label("Shortcuts", systemImage: "keyboard")
                 }
+                Section("Wellness") {
+                    NavigationLink(value: "Focus") {
+                        Label("Focus", systemImage: "timer")
+                    }
+                    NavigationLink(value: "Water") {
+                        Label("Water", systemImage: "drop.fill")
+                    }
+                    NavigationLink(value: "Rest") {
+                        Label("Rest", systemImage: "eye.fill")
+                    }
+                    NavigationLink(value: "Prayer") {
+                        Label("Prayer", systemImage: "moon.stars.fill")
+                    }
+                    NavigationLink(value: "ScreenTime") {
+                        Label("Screen Time", systemImage: "hourglass")
+                    }
+                }
                 // NavigationLink(value: "Extensions") {
                 //     Label("Extensions", systemImage: "puzzlepiece.extension")
                 // }
@@ -87,6 +104,16 @@ struct SettingsView: View {
                     Shelf()
                 case "Shortcuts":
                     Shortcuts()
+                case "Focus":
+                    FocusSettingsPane()
+                case "Water":
+                    WaterSettingsPane()
+                case "Rest":
+                    RestSettingsPane()
+                case "Prayer":
+                    PrayerSettingsPane()
+                case "ScreenTime":
+                    ScreenTimeSettingsPane()
                 case "Extensions":
                     GeneralSettings()
                 case "Advanced":

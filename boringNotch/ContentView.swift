@@ -23,6 +23,7 @@ struct ContentView: View {
     @ObservedObject var batteryModel = BatteryStatusViewModel.shared
     @ObservedObject var brightnessManager = BrightnessManager.shared
     @ObservedObject var volumeManager = VolumeManager.shared
+    @ObservedObject var wellness = WellnessStore.shared
     @State private var hoverTask: Task<Void, Never>?
     @State private var isHovering: Bool = false
     @State private var anyDropDebounceTask: Task<Void, Never>?
@@ -65,6 +66,10 @@ struct ContentView: View {
             && vm.notchState == .closed && Defaults[.showPowerStatusNotifications]
         {
             chinWidth = 640
+        } else if !coordinator.expandingView.show && vm.notchState == .closed && !vm.hideOnClosed,
+                  let wellnessContent = WellnessClosedContent.current(wellness)
+        {
+            chinWidth += (2 * wellnessContent.sideWidth + 20)
         } else if (!coordinator.expandingView.show || coordinator.expandingView.type == .music)
             && vm.notchState == .closed && (musicManager.isPlaying || !musicManager.isPlayerIdle)
             && coordinator.musicLiveActivityEnabled && !vm.hideOnClosed
@@ -287,6 +292,15 @@ struct ContentView: View {
                       } else if coordinator.sneakPeek.show && Defaults[.inlineHUD] && (coordinator.sneakPeek.type != .music) && (coordinator.sneakPeek.type != .battery) && vm.notchState == .closed {
                           InlineHUD(type: $coordinator.sneakPeek.type, value: $coordinator.sneakPeek.value, icon: $coordinator.sneakPeek.icon, hoverAnimation: $isHovering, gestureProgress: $gestureProgress)
                               .transition(.opacity)
+                      } else if !coordinator.expandingView.show && vm.notchState == .closed && !vm.hideOnClosed,
+                                let wellnessContent = WellnessClosedContent.current(wellness) {
+                          WellnessClosedActivity(
+                              content: wellnessContent,
+                              height: vm.effectiveClosedNotchHeight,
+                              notchWidth: vm.closedNotchSize.width + -cornerRadiusInsets.closed.top
+                          )
+                          .frame(alignment: .center)
+                          .transition(.opacity)
                       } else if (!coordinator.expandingView.show || coordinator.expandingView.type == .music) && vm.notchState == .closed && (musicManager.isPlaying || !musicManager.isPlayerIdle) && coordinator.musicLiveActivityEnabled && !vm.hideOnClosed {
                           MusicLiveActivity()
                               .frame(alignment: .center)
@@ -349,6 +363,18 @@ struct ContentView: View {
                         NotchHomeView(albumArtNamespace: albumArtNamespace)
                     case .shelf:
                         ShelfView()
+                    case .focus:
+                        FocusTabView()
+                    case .water:
+                        WaterTabView()
+                    case .rest:
+                        RestTabView()
+                    case .prayer:
+                        PrayerTabView()
+                    case .screenTime:
+                        ScreenTimeTabView()
+                    case .timer:
+                        TimerTabView()
                     }
                 }
                 .transition(

@@ -11,15 +11,17 @@ struct TabButton: View {
     let label: String
     let icon: String
     let selected: Bool
+    var padding: CGFloat = 15
     let onClick: () -> Void
     
     var body: some View {
         Button(action: onClick) {
             Image(systemName: icon)
-                .padding(.horizontal, 15)
+                .padding(.horizontal, padding)
                 .contentShape(Capsule())
         }
         .buttonStyle(PlainButtonStyle())
+        .help(label)
     }
 }
 
